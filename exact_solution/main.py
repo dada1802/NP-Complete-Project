@@ -6,52 +6,49 @@ import itertools
 
 def check_independent_set(nums, graph):
     check = True
+    total_color = set()
+    total_color.add(0)
     colors = {}
 
     for u in graph:
-        colors[u] = None
-        if u == 0:
-            colors[u] = 0
+        colors[u] = set()
+        colors[u].add(0)
 
     for u in graph:
         for v in graph[u]:
-            if len(nums) < 2:
-                return False, colors
+            highest_u = max(colors[u])
+            highest_v = max(colors[v])
+            if highest_u == highest_v:
+                if (highest_v + 1) <= max(nums):
+                    colors[v].add(highest_v + 1)
 
-    return check, colors
+                    if (highest_v + 1) not in total_color:
+                        total_color.add(highest_v + 1)
 
+                else:
+                    return False, colors, total_color
 
-def create_graph(n):
-    graph = {}
-
-    for i in range(n):
-        graph[i] = set()
-
-    for u in range(n):
-        for v in range(n):
-            if u != v:
-                graph[u].add(v)
-
-    return graph
+    return check, colors, total_color
 
 def main():
     # start_time = time.time()
-    # num_vertices = int(input())
-
-    # for i in range(num_vertices):
-    #     graph[i] = set()
-
-    # for _ in range(num_vertices):
-    #     x = input().split()
-    #     for i in range(1, len(x)):
-    #         graph[int(x[i])].add(int(x[0]))
-    #         graph[int(x[0])].add(int(x[i]))
-
-    n = 3
+    num_edges = int(input())
     num_colors = 1
+    graph = {}
     check = False
-    graph = create_graph(n)
-    print(graph)
+    colors = {}
+    total_color = set()
+
+    for _ in range(num_edges):
+        u, v = input().split()
+        if u not in graph:
+            graph[u] = set()
+        
+        if v not in graph:
+            graph[v] = set()
+
+        graph[u].add(v)
+        graph[v].add(u)
 
     while not check:
         nums = []
@@ -59,16 +56,19 @@ def main():
         for i in range(num_colors):
             nums.append(i)
 
-        lst = itertools.product(nums, repeat=n)
+        lst = itertools.product(nums, repeat=len(graph))
 
         for val in lst:
-            print(val)
+            check, colors, total_color = check_independent_set(val, graph)
+            if check:
+                break
         
         num_colors += 1
-        print()
 
-        if num_colors == 3:
-            check = True
+    print()
+    print(max(total_color) + 1)
+    for node in colors:
+        print(f"{node} {max(colors[node])}")
 
     # print("--- %s seconds ---" % (time.time() - start_time))
 
