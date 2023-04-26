@@ -18,26 +18,6 @@ def check_independent_set(nums, graph):
     
     return True, colors, nums
 
-    # for u in graph:
-    #     colors[u] = set()
-    #     colors[u].add(0)
-
-    # for u in graph:
-    #     for v in graph[u]:
-    #         highest_u = max(colors[u])
-    #         highest_v = max(colors[v])
-    #         if highest_u == highest_v:
-    #             if (highest_v + 1) <= max(nums):
-    #                 colors[v].add(highest_v + 1)
-
-    #                 if (highest_v + 1) not in total_color:
-    #                     total_color.add(highest_v + 1)
-
-    #             else:
-    #                 return False, colors, total_color
-
-    # return True, colors, total_color
-
 def main():
     # start_time = time.time()
     num_edges = int(input())
