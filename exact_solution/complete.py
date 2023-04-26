@@ -18,24 +18,27 @@ def check_independent_set(nums, graph):
     
     return True, colors, nums
 
+def create_complete_graph(num_vertices):
+    graph = {}
+
+    for i in range(num_vertices):
+        graph[i] = set()
+
+    for u in graph:
+        for v in graph:
+            if u != v:
+                graph[u].add(v)
+                graph[v].add(u)
+
+    return graph
+
 def main():
     start_time = time.time()
-    num_edges = int(input())
+    num_vertices = int(input())
     num_colors = 1
-    graph = {}
+    graph = create_complete_graph(num_vertices)
     check = False
     colors = {}
-    
-    for _ in range(num_edges):
-        u, v = input().split()
-        if u not in graph:
-            graph[u] = set()
-        
-        if v not in graph:
-            graph[v] = set()
-
-        graph[u].add(v)
-        graph[v].add(u)
 
     while not check:
         nums = []
