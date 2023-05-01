@@ -1,7 +1,7 @@
 """
     name: David Nguyen
 """
-import time
+# import time
 import itertools
 
 def check_independent_set(nums, graph):
@@ -19,7 +19,7 @@ def check_independent_set(nums, graph):
     return True, colors, nums
 
 def main():
-    start_time = time.time()
+    # start_time = time.time()
     num_edges = int(input())
     num_colors = 1
     graph = {}
@@ -56,7 +56,7 @@ def main():
     for node in colors:
         print(f"{node} {colors[node]}")
 
-    print("--- %s seconds ---" % (time.time() - start_time))
+    # print("--- %s seconds ---" % (time.time() - start_time))
 
 
 if __name__ == "__main__":
