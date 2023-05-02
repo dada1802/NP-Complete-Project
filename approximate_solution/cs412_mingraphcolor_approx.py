@@ -89,26 +89,19 @@ def main():
 
     # TO-DO: Convert this patch main method to work with its own test cases like a shell script
 
-    input_str = '3\na b\na c\nb c'
-
-    lines = input_str.strip().split('\n')
-    num_vertices = int(lines[0])
-
-    # Create an empty dictionary to represent the graph
+    num_edges = int(input())
     graph = {}
 
-    # Iterate over the remaining lines and add edges to the graph
-    for line in lines[1:]:
-        v1, v2 = line.split()
-        # Add v1 to the graph if it's not already present
-        if v1 not in graph:
-            graph[v1] = set()
-        # Add v2 to the graph if it's not already present
-        if v2 not in graph:
-            graph[v2] = set()
-        # Add the edge between v1 and v2 to the graph
-        graph[v1].add(v2)
-        graph[v2].add(v1)
+    for _ in range(num_edges):
+        u, v = input().split()
+        if u not in graph:
+            graph[u] = set()
+
+        if v not in graph:
+            graph[v] = set()
+
+        graph[u].add(v)
+        graph[v].add(u)
 
     print(graph)
     print(dsatur(graph))
