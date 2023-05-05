@@ -2,6 +2,8 @@
     Name: Christopher Simmons
 """
 
+import time
+
 
 def dsatur(graph):
     """
@@ -23,6 +25,8 @@ def dsatur(graph):
     # Initialize color and saturation degree dictionaries for each vertex
     colors = {vertex: None for vertex in graph}
     saturation_degrees = {vertex: 0 for vertex in graph}
+
+    start_time = time.time()
 
     # Helper function to find the vertex with maximum saturation degree
     def find_max_saturation_degree():
@@ -59,27 +63,35 @@ def dsatur(graph):
         for neighbor in graph[max_saturation_degree_vertex]:
             saturation_degrees[neighbor] += 1
 
-    return colors
+    print(len(set(colors.values())))
+    for node in colors:
+        print(f"{node} {colors[node]}")
+
+    print("--- %s seconds ---" % (time.time() - start_time))
 
 
-def rlf():
+def brooks(graph):
     """
-    Recursive Largest First
+    Computes the chromatic number of a graph using Brooks' algorithm.
 
-    Pseudocode:
+    Args:
+        graph (dict): A dictionary representing the graph, where each key is a vertex
+            and the value is a set of adjacent vertices.
 
+    Returns:
+        int: The chromatic number of the graph.
     """
-    pass
+    # Compute the maximum degree of any vertex in the graph
+    max_degree = max(len(adjacent) for adjacent in graph.values())
 
+    # Check if the graph is a complete graph or an odd cycle
+    if max_degree == len(graph) - 1:
+        return f"The graph is a complete graph. The chromatic number is {max_degree + 1}."
+    elif len(graph) % 2 == 1 and max_degree == len(graph) // 2:
+        return f"The graph is an odd cycle. The chromatic number is at most {max_degree + 1}."
 
-def rlf_random():
-    """
-    Recursive Largest First using random selection.
-
-    Pseudocode:
-
-    """
-    pass
+    # Otherwise, use the upper bound Delta + 1
+    return f"The chromatic number of the graph is at most {max_degree + 1}."
 
 
 def main():
@@ -103,8 +115,8 @@ def main():
         graph[u].add(v)
         graph[v].add(u)
 
-    print(graph)
-    print(dsatur(graph))
+    dsatur(graph)
+    print(brooks(graph))
 
 
 if __name__ == "__main__":
